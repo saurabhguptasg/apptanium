@@ -2,6 +2,7 @@ package com.apptanium.gcs;
 
 /**
  * @author saurabh
+ * @deprecated
  */
 public final class ApptaniumGcsServiceConfig {
   private final String projectId;
