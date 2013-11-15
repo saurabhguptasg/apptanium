@@ -1,4 +1,3 @@
-# intro
 Apptaium utilities for Google App Engine
 ========================================
 
