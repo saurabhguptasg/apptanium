@@ -33,13 +33,9 @@ public class RemoteTest {
     apptaniumGcsService = ApptaniumGcsServiceFactory.getGcsService(projectId);
 
 //    testListBuckets();
+    //NOTE: change <<bucket name>> with the actual name of your target test bucket
     testListObjects("<<bucket name>>");
     testListObjectsWithPrefixes("<<bucket name>>", "/");
-    testBucketConfig("<<bucket name>>", GcsBucketConfigType.ACL);
-    testBucketConfig("<<bucket name>>", GcsBucketConfigType.CORS);
-    testBucketConfig("<<bucket name>>", GcsBucketConfigType.LIFECYCLE);
-    testBucketConfig("<<bucket name>>", GcsBucketConfigType.LOGGING);
-    testBucketConfig("<<bucket name>>", GcsBucketConfigType.VERSIONING);
   }
 
   private void testListObjects(String bucketName) {
@@ -73,18 +69,11 @@ public class RemoteTest {
     }
   }
 
-  private void testBucketConfig(String bucketName, GcsBucketConfigType configType) {
-    System.out.println("-----\n-----\n----- RemoteTest.testBucketConfig: bucketName = [" + bucketName + "], configType = [" + configType + "]");
-    try {
-      apptaniumGcsService.getBucketConfig(bucketName, configType);
-    }
-    catch (GcsException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
-  }
-
-
   public static void main(String[] args) throws IOException {
-    new RemoteTest(args[0], Integer.parseInt(args[1]), args[2], args[3], args[4]);
+    new RemoteTest(args[0], //the endpoint: e.g. my-app.appspot.com
+                   Integer.parseInt(args[1]), //the port, use 443
+                   args[2], //the project id, e.g. my-app
+                   args[3], //your username for the app, you must have admin rights on the application
+                   args[4]); //your password for the username
   }
 }

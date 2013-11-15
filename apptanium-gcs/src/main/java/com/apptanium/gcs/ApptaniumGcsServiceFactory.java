@@ -5,6 +5,9 @@ import com.apptanium.gcs.auth.URLFetchUtils;
 import com.google.appengine.api.utils.SystemProperty;
 
 /**
+ * Use this to create an instance of ApptaniumGcsService.
+ * A service is specific to the project id.
+ *
  * @author saurabh
  */
 public final class ApptaniumGcsServiceFactory {

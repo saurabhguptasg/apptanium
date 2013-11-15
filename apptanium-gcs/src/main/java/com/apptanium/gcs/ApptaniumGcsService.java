@@ -5,19 +5,36 @@ import com.apptanium.gcs.model.*;
 import java.util.List;
 
 /**
+ * Since the GCS xml schema uses the Amazon S3 xml:ns, the javadocs
+ * on some of these methods are taken from the Amazon S3 interface since they very closely track/describe
+ * the functionality of the bucket
  * @author saurabh
  */
 public interface ApptaniumGcsService {
+
+  /**
+   * Given a bucket name, list all the objects in it; this will likely be a paginated response with a certain
+   * number of keys and a next marker that should be passed with a ListObjectsRequest for subsequent calls
+   * @param bucketName the bucket name to get an object listing from
+   * @return the object listing
+   * @throws GcsException
+   */
   public GcsObjectListing listObjects(String bucketName) throws GcsException;
 
+  /**
+   * Given a prefix, get all the objects that match that prefix
+   * @param bucketName the bucket to query
+   * @param prefix the prefix to use
+   * @return the object listing that matches
+   * @throws GcsException
+   */
   public GcsObjectListing listObjects(String bucketName, String prefix) throws GcsException;
 
   /**
    * <p>
    * Returns a list of summary information about the objects in the specified
    * bucket. Depending on the request parameters, additional information is returned,
-   * such as common prefixes if a delimiter was specified. List
-   * results are <i>always</i> returned in lexicographic (alphabetical) order.
+   * such as common prefixes if a delimiter was specified.
    * </p>
    * <p>
    * Because buckets can contain a virtually unlimited number of keys, the
@@ -60,6 +77,8 @@ public interface ApptaniumGcsService {
    * affect list performance.
    * </p>
    *
+   * This content adapted from Amazon S3 documentation.
+   *
    * @param listObjectsRequest
    *            The request object containing all options for listing the
    *            objects in a specified bucket.
@@ -90,6 +109,9 @@ public interface ApptaniumGcsService {
    * retrieve more results until the returned <code>ObjectListing</code> indicates that
    * it is not truncated.
    * </p>
+   *
+   * This content adapted from Amazon S3 documentation.
+
    * @param previousGcsObjectListing
    *            The previous truncated <code>ObjectListing</code>.
    *            If a
@@ -107,10 +129,28 @@ public interface ApptaniumGcsService {
   public GcsObjectListing listNextBatchOfObjects(GcsObjectListing previousGcsObjectListing) throws GcsException;
 
 
+  /**
+   * This is not operational at this time: there are acl errors that GCS produces when
+   * an app engine app tries to access a bucket list
+   * @return
+   * @throws GcsException
+   */
   public List<GcsBucket> listBuckets() throws GcsException;
 
+  /**
+   * NOT OPERATIONAL and NOT IMPLEMENTED
+   * @param bucketName
+   * @return
+   */
   public GcsBucket createBucket(String bucketName);
 
 
+  /**
+   * NOT OPERATIONAL and NOT IMPLEMENTED
+   * @param bucketName
+   * @param configType
+   * @return
+   * @throws GcsException
+   */
   public GcsBucketConfig getBucketConfig(String bucketName, GcsBucketConfigType configType) throws GcsException;
 }
